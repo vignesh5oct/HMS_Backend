@@ -3,11 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
-
-
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate
+
+from .serializers import RegisterSerializer
+from .models import CustomUser
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
@@ -72,3 +75,11 @@ class RefreshTokenView(APIView):
             return res
         except Exception:
             return Response({"error": "Invalid refresh token"}, status=400)
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
