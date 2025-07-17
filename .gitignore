@@ -1,0 +1,17 @@
+# Python (Django)
+hms_project/__pycache__/
+hms_project/*.pyc
+hms_project/env/
+hms_project/venv/
+*.sqlite3
+*.log
+
+# Node (Vite/React)
+frontend/node_modules
+frontend/dist/
+frontend/.vite/
+
+# Common
+.env
+.DS_Store
+*.log
