@@ -81,12 +81,5 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            print("DOCTOR:", user.is_doctor)
-            print("PATIENT:", user.is_patient)
-            if user.is_doctor:
-                DoctorProfile.objects.create(user=user)
-            elif user.is_patient:
-                PatientProfile.objects.create(user=user)
-
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

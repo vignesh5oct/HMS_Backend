@@ -8,7 +8,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ("name", "email", "password", "confirm_password","phone","is_doctor","is_patient")
+        fields = ("name", "email", "password", "confirm_password","phone")
 
     def validate(self, attrs):
         if attrs["password"] != attrs["confirm_password"]:
@@ -22,7 +22,5 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
             name=validated_data["name"],
             phone=validated_data["phone"],
-            is_doctor=validated_data["is_doctor"],
-            is_patient=validated_data["is_patient"]
         )
         return user
